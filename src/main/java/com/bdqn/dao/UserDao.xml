@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.dao.UserDao">
+<!--登陆-->
+    <select id="isLogin" parameterType="User" resultType="User">
+        select userCode,userName from smbms_user where userCode=#{userCode} and userPassword=#{userPassword}
+    </select>
+
+    <!--修改密码-->
+    <update id="updauser">
+        UPDATE smbms_user set userPassword=#{userPassword} where userCode=#{userCode}
+    </update>
+
+<!--列表及分页-->
+    <select id="getUser"  resultType="User">
+        SELECT  *  FROM  smbms_user
+    </select>
+
+    <!--删除-->
+    <delete id="del">
+        DELETE  FROM smbms_user where id=#{id}
+    </delete>
+
+<!--添加用户-->
+<insert id="add">
+ INSERT INTO smbms_user (userCode,userName,userPassword,gender,birthday,phone,address,userRole) VALUE (#{userCode},#{userName},#{userPassword},#{gender},#{birthday},#{phone},#{address},#{userRole})
+</insert>
+
+    <!--模糊查询-->
+    <select id="Mall" resultType="User">
+    select * FROM  smbms_user WHERE userName LIKE concat('%', #{userName} ,'%')
+    </select>
+
+
+    <!--修改-->
+<update id="update">
+update smbms_user set userName=#{userName},userPassword=#{userPassword},gender=#{gender},birthday=#{birthday},phone=#{phone},address=#{address},userRole=#{userRole} where id=#{id}
+</update>
+    <!--根据id查询所有进行修改-->
+    <select id="getAll" resultType="User">
+        SELECT  * from  smbms_user where id=#{id}
+    </select>
+
+<!--获取总记录数-->
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(1) FROM smbms_user
+    </select>
+<!--获取单页数据-->
+    <select id="getOnePageData" resultType="User">
+        SELECT * from smbms_user limit #{pageIndex},#{pageSize}
+    </select>
+   <!--模糊查询-->
+    <!--获取总记录数-->
+    <select id="getTotalCountName" resultType="int">
+       select count(1) from smbms_user WHERE userName like  '%' #{userName} '%'
+    </select>
+    <!--获取单页数据-->
+    <select id="getOnePageDatastion" resultType="User">
+       select * from smbms_user where userName like '%' #{userName} '%' limit #{pageIndex},#{pageSize}
+    </select>
+
+
+    <select id="getfind" resultType="User">
+        select * from smbms_user
+    </select>
+
+
+</mapper>
+
